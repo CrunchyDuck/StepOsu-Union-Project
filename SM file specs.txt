@@ -1,0 +1,78 @@
+The following is an example of how a .sm file might be laid out.
+With information from https://github.com/stepmania/stepmania/wiki/File-Formats
+(but not much because it's not well documented so most of it is reverse engineered.)
+
+
+
+
+#TITLE:Destination of the Heart;	// Name of the song.
+#SUBTITLE:; 						// Album name or song sub message
+#ARTIST:Renard;						// Who made the song?
+#TITLETRANSLIT:; 					// ?
+#SUBTITLETRANSLIT:; 				// ?
+#ARTISTTRANSLIT:; 					// ?
+#GENRE:; 							// ?
+#CREDIT:; 							// ?
+#MENUCOLOR:; 						// ?
+#BANNER:heart.png;					// Image shown in preview.
+#BACKGROUND:heart-bg.png;			// Image used in the background of the beatmap.
+#LYRICSPATH:; 						// ?
+#CDTITLE:; 							// ?
+#MUSIC:heart.ogg;					// File to use for the audio.
+#OFFSET:0.009;						// How much to push the song back in the track. Essentially, adds silence.
+#SAMPLESTART:9.480;					// Start of the song preview.
+#SAMPLELENGTH:12.000;				// How long sample lasts.
+#SELECTABLE:YES; 					// ?
+#LISTSORT:; 						// ?
+#BPMS:0.000=200.000, 32.000=400.000	// tick=bpm, tick=bpm etc. See TICKCOUNT below
+, 531.000=150.001, 559.000=300.001; 
+#STOPS:176.000=2.100				// ?=?   Beatmap stops for a period of time but the music continues to play.
+,353.000=2.250
+;
+#TICKCOUNT:0.000=2; 				// measure=TICKCOUNT   How many ticks pass per measure.
+#BGCHANGES:; 						// Background changes
+#KEYSOUNDS:; 						// Similar to hitsounds in Osu, it seems. Can't find an example of these yet.
+#ATTACKS:; 							// ?
+
+//---------------dance-single - Renard----------------
+#NOTES:
+ dance-single: 						// Game mode. dance-single = 4 keys
+ Renard: 							// I THINK this is who made the map?
+ Easy:   							// Marked difficulty name
+ 2: 								// Marked difficulty number
+ 0.000,0.000,0.000,0.000,0.000:     // Not really sure what these numbers do. They seem to be related to difficulty?
+0000
+0000
+0000
+0000
+,  									// These commas signify a new measure.
+0010
+0000 								// 0 = no note pressed
+1000 								// 1 = note tapped
+0000
+2000 								// 2 = note hold start
+0000
+0000
+3000 								// 3 = note hold end
+,  									// measure 3
+...									// etc...
+0000
+0000
+0000
+0000
+;									// Signals the end of a map.
+
+//---------------dance-single - ----------------
+#NOTES:
+     dance-single:
+     Renard:
+     Medium: 						// You may have multiple difficulties by structuring the file like this.
+     6:
+     0.256,0.271,0.131,0.094,0.056:
+0000
+0000
+0000
+0000
+,
+...
+;

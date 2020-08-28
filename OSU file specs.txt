@@ -1,0 +1,111 @@
+// With information taken from: https://osu.ppy.sh/help/wiki/osu!_File_Formats/Osu_(file_format)
+// A lot of this data only concerns other game modes, so I've ignored them/described them only in terms of Mania.
+osu file format v14			// Version :D
+
+[General]					// Segmented up like a .ini file
+AudioFilename: audio.mp3	// File that audio for the game is taken from.
+AudioLeadIn: 0				// Milliseconds of silence before the audio starts playing
+PreviewTime: 86735			// When selecting the song, what part it will play as a "preview". In milliseconds.
+Countdown: 0				// This is the goofy count down at the start of a map. Probably just leave it at 0.
+SampleSet: Soft				// SFX
+StackLeniency: 0.7
+Mode: 3						// What game mode. 3 is mania.
+LetterboxInBreaks: 0		
+SpecialStyle: 0
+WidescreenStoryboard: 1
+
+[Editor]					// These don't impact playing the map so it doesn't matter.
+DistanceSpacing: 1.2
+BeatDivisor: 6
+GridSize: 4
+TimelineZoom: 1.2
+
+[Metadata]
+Title:Flim					// Name. Can be in something like Japanese.
+TitleUnicode:Flim			// English version of name, normally.
+Artist:Aphex Twin			// Similar to title.
+ArtistUnicode:Aphex Twin	// Similar to unicode title.
+Creator:Davvy				// Map creator.
+Version:Normal				// Name of difficulty
+Source:						// "Original media the song was produced for". Not sure what this means?
+Tags:StepMania				// Search terms
+BeatmapID:2475865			// For published maps. Set to 0 if unpublished. This should be 0 if not a converted map.
+BeatmapSetID:1178598		// 
+
+[Difficulty]
+HPDrainRate:7				// How quickly you lose/regain HP. 10 is no regen.
+CircleSize:4
+OverallDifficulty:7.5		// Accuracy required, basically.
+ApproachRate:5
+SliderMultiplier:1.4
+SliderTickRate:2
+
+[Events]					// For the video VFX stuff. Converted maps probably won't have flashy visuals, so not too important.
+//Background and Video events
+0,0,"background.jpg",0,0	// BG image.
+//Break Periods
+//Storyboard Layer 0 (Background)
+//Storyboard Layer 1 (Fail)
+//Storyboard Layer 2 (Pass)
+//Storyboard Layer 3 (Foreground)
+//Storyboard Layer 4 (Overlay)
+//Storyboard Sound Samples
+
+[TimingPoints]				// Changes BPM type stuff. See end of section.
+2503,405.350628293474,4,2,1,60,1,0
+75475,402.684563758389,4,2,1,60,1,8
+75475,-101.010101010101,4,2,1,60,0,0
+78696,405.405405405405,4,2,1,60,1,0
+86819,400,4,2,1,60,1,8
+86819,-102.040816326531,4,2,1,60,0,8
+88427,405.816706121069,4,2,1,60,1,8
+
+/* Timing Point Syntax:
+time,beatLength,meter,sampleSet,sampleIndex,volume,uninherited,effects
+
+time: Start time of the timing section, in milliseconds from the beginning of the beatmap's audio. Ends at the next timing point.
+beatLength: This property has two meanings:
+	For uninherited timing points, the duration of a beat, in milliseconds.
+	For inherited timing points, a negative inverse slider velocity multiplier, as a percentage. For example, -50 would make all sliders in this timing section twice as fast as SliderMultiplier.
+This value is calculated as 60000 / BPM
+meter: Amount of beats in a measure. Inherited timing points ignore this property.
+sampleSet: Default sample set for hit objects (0 = beatmap default, 1 = normal, 2 = soft, 3 = drum).
+sampleIndex: Custom sample index for hit objects. 0 indicates osu!'s default hitsounds.
+volume: Volume percentage for hit objects.
+uninherited: Whether or not the timing point is uninherited.
+effects: Bit flags that give the timing point extra effects.
+*/
+
+
+
+[HitObjects]						// The notes in the map, finally.
+64,192,2502,5,2,0:0:0:0:			// See bottom of explanation of this structure.
+448,192,2908,1,8,0:0:0:0:
+320,192,3111,1,0,0:0:0:0:
+192,192,3111,1,2,0:0:0:0:
+64,192,3313,1,0,0:0:0:0:
+448,192,3415,128,8,3719:0:0:0:0: 	// This is a slider. Take note of the extra value, 3719. Explained under objectParams.
+448,192,3719,1,8,0:0:0:0:
+192,192,3820,1,2,0:0:0:0:
+
+/* Hit Object Syntax:
+x,y,time,type,hitSound,(objectParams),hitSample
+
+x: Position of the object. For mania, this signals which key is pressed. 4K left to right: 64, 192, 320, 448
+y: Position of the object. In mania, this is always 192.
+time: Time when the object is to be hit, in milliseconds from the beginning of the beatmap's audio.
+type: Bit flags indicating the type of the object. See Type Bits below.
+hitSound: Bit flags indicating the hitsound applied to the object. I won't document this well since it doesn't convert between games well. Check site for more info.
+objectParams: Extra parameters specific to the object's type. For mania, there is only the hold, with the special parameter "endTime". This value and its colon is omitted if not used.
+hitSample: Information about which samples are played when the object is hit. Like hitSound, I'm not going to document this here as it's not relevant to conversion.
+
+
+Type Bits:
+0: Hit circle
+1: Slider start
+2: New combo				Not used in Mania?
+3: Spinner					Not used in Mania.
+4-6: Colour combo stuff. 	Not used in mania.
+7: osu!mania hold
+
+*/
